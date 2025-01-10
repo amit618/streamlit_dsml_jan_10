@@ -1,5 +1,6 @@
 import streamlit as st
 import pickle
+import joblib
 
 st.title("Car Price Prediction App")
 
@@ -33,17 +34,33 @@ seller_type = st.selectbox("Seller Type", list(encode_dict["seller_type"].keys()
 
 km_driven = st.number_input("Kilometers Driven", min_value=0, value=40000, step=5000)
 
-fuel_type = st.selectbox("Fuel Type", list(encode_dict["fuel_type"].keys()))
+#fuel_type = st.selectbox("Fuel Type", list(encode_dict["fuel_type"].keys()))
 
-transmission_type = st.radio("Transmission Type", list(encode_dict["transmission_type"].keys()))
+#transmission_type = st.radio("Transmission Type", list(encode_dict["transmission_type"].keys()))
 
 mileage = st.number_input("Mileage (kmpl)", min_value=0.0, value=18.0, step=0.5)
 
-engine = st.number_input("Engine (CC)", min_value=500, max_value=5000, value=1200, step=100)
+#engine = st.number_input("Engine (CC)", min_value=500, max_value=5000, value=1200, step=100)
 
 max_power = st.number_input("Max Power (bhp)", min_value=50.0, max_value=500.0, value=85.0, step=5.0)
 
-seats = st.selectbox("Seats", [2, 4, 5, 6, 7, 8, 9, 10])
+#seats = st.selectbox("Seats", [2, 4, 5, 6, 7, 8, 9, 10])
+
+col1, col2 = st.columns(2)
+
+fuel_type = col1.selectbox("Select the fuel type",
+                           ["Diesel", "Petrol", "CNG", "LPG", "Electric"])
+
+engine = col1.slider("Set the Engine Power",
+                     500, 5000, step=100)
+
+transmission_type = col2.selectbox("Select the transmission type", 
+                                   ["Manual", "Automatic"])
+
+seats = col2.selectbox("Enter the number of seats",
+                       [4,5,7,9,11])
+
+scaler = joblib.load("scaler.pkl")
 
 #['year', 'seller_type', 'km_driven', 'fuel_type', 'transmission_type', 'mileage', 'engine', 'max_power', 'seats']
 def model_pred(
@@ -75,6 +92,9 @@ def model_pred(
         float(max_power),
         float(seats)
     ]]
+    
+	# Scale the data
+    data = scaler.transform(data)
     
 
     
