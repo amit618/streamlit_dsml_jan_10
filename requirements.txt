@@ -1,0 +1,6 @@
+streamlit
+pandas
+scikit-learn
+yfinance
+
+#always specify version no. for each package
