@@ -18,7 +18,9 @@ end_date = st.date_input("Please enter Ending Date",
 
 
 import yfinance as yf
-ticker_symbol = 'AAPL'
+#ticker_symbol = 'AAPL'
+
+ticker_symbol = st.text_input("Enter the stock ticker symbol", "AAPL")
 
 ticker_data = yf.Ticker(ticker_symbol)
 
@@ -35,3 +37,39 @@ st.write(
 )
 
 st.line_chart(ticker_df.Close)
+
+
+#col1, col2, col3 = st.columns(3)
+
+#with col1:
+#    st.header("A cat")
+#    st.image("https://static.streamlit.io/examples/cat.jpg")
+
+#with col2:
+#    st.header("A dog")
+#    st.image("https://static.streamlit.io/examples/dog.jpg")
+
+#with col3:
+#    st.header("An owl")
+#    st.image("https://static.streamlit.io/examples/owl.jpg")
+
+
+# create side by side chart of Close and Volume
+
+col1, col2 = st.columns(2)
+
+with col1:
+	st.write(
+		"""
+		   ## Daily Closing Price Chart
+		"""
+	)
+	st.line_chart(ticker_df.Close)
+
+with col2:
+	st.write(
+		"""
+		   ## Daily Volume Price Chart
+		"""
+	)
+	st.line_chart(ticker_df.Volume)
