@@ -1,6 +1,6 @@
-streamlit
-pandas
-scikit-learn
-yfinance
+streamlit==1.41.1
+pandas==2.2.2
+scikit-learn==1.4.2
+yfinance==0.2.40
 
 #always specify version no. for each package
